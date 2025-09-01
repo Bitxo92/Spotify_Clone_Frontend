@@ -14,6 +14,7 @@ class _SignupPageState extends State<SignupPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -29,37 +30,44 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            const Text(
-              "Sign Up",
-              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 30),
-            CustomField(hintText: 'name'),
-            SizedBox(height: 15),
-            CustomField(hintText: 'email'),
-            SizedBox(height: 15),
-            CustomField(hintText: 'password'),
-            SizedBox(height: 50),
-            AuthGradientButton(),
-            SizedBox(height: 20),
-            RichText(
-              text: TextSpan(
-                text: 'Already have an account? ',
-                style: Theme.of(context).textTheme.titleMedium,
-                children: [
-                  TextSpan(
-                    text: 'Sign in',
-                    style: TextStyle(
-                      color: Pallete.gradient2,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const Text(
+                "Sign Up",
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
               ),
-            ),
-          ],
+              SizedBox(height: 30),
+              CustomField(hintText: 'name', controller: nameController),
+              SizedBox(height: 15),
+              CustomField(hintText: 'email', controller: emailController),
+              SizedBox(height: 15),
+              CustomField(
+                hintText: 'password',
+                controller: passwordController,
+                isPassword: true,
+              ),
+              SizedBox(height: 50),
+              AuthGradientButton(),
+              SizedBox(height: 20),
+              RichText(
+                text: TextSpan(
+                  text: 'Already have an account? ',
+                  style: Theme.of(context).textTheme.titleMedium,
+                  children: [
+                    TextSpan(
+                      text: 'Sign in',
+                      style: TextStyle(
+                        color: Pallete.gradient2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
