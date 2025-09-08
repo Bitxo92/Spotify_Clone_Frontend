@@ -3,16 +3,18 @@ import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
+import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  ConsumerState<SignupPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends ConsumerState<SignupPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -53,12 +55,15 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(height: 50),
               AuthGradientButton(
                 btnName: 'Sign Up',
-                onTap: () async {
-                  await AuthRemoteRepository().signup(
-                    name: nameController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
+                onTap: () {
+                  if (!formKey.currentState!.validate()) return;
+                  ref
+                      .read(authViewmodelProvider.notifier)
+                      .signUpUser(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
                 },
               ),
               SizedBox(height: 20),
