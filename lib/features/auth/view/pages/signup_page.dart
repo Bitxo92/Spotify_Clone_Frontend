@@ -1,5 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
-import 'package:client/features/auth/repositories/auth_remote_repository.dart';
+import 'package:client/core/widgets/loader.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
@@ -35,7 +35,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(15),
               child: Form(
